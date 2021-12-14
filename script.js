@@ -94,13 +94,13 @@ function displayCurrentUV(data) {
     console.log(+currentUV.textContent <= 2);
 
     if (+currentUV.textContent < 3) {
-        currentUV.setAttribute("class", "lowUV");
+        currentUV.classList.add("UV", "lowUV");
     } else if (+currentUV.textContent <= 5 && +currentUV.textContent >= 3) {
-        currentUV.setAttribute("class", "moderateUV");
+        currentUV.classList.add("UV", "moderateUV");
     } else if (+currentUV.textContent <= 7 && +currentUV.textContent > 5) {
-        currentUV.setAttribute("class", "highUV");
+        currentUV.classList.add("UV","highUV");
     } else {
-        currentUV.setAttribute("class", "veryHighUV");
+        currentUV.classList.add("UV","veryHighUV");
     }
 }
 
