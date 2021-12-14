@@ -1,20 +1,3 @@
-var searchListArray = JSON.parse(localStorage.getItem("searches"));
-
-var searchList = document.querySelector("#search-list");
-
-console.log(searchListArray);
-
-if (searchListArray !== null) {
-
-for (var i = 0; i < searchListArray.length; i++) {
-
-    var listBtn = document.createElement("button");
-    listBtn.textContent = searchListArray[i];
-    listBtn.setAttribute("class", "btn");
-    searchList.appendChild(listBtn);
-}
-}
-
 var apiKey = "e5576d82579ed9bbb612520ba4f08b10";
 
 var input = document.querySelector("input");
@@ -24,7 +7,9 @@ var searchBtn = document.querySelector("#searchBtn");
 searchBtn.addEventListener("click", getCurrentConditions);
 
 function getCurrentConditions(event) {
+    if (event) {
     event.preventDefault();
+    }
 
     var city = input.value;
 
@@ -37,7 +22,6 @@ function getCurrentConditions(event) {
               response.json().then(function (data) {
                 console.log(data);
                 displayCurrentConditions(data);
-                addSearchHistory(city);
               });
           } else {
               alert("Error: " + response.statusText + ". Please search for a valid city name");
@@ -75,6 +59,9 @@ function displayCurrentConditions(data) {
 
     getCurrentUV(cityLon, cityLat);
     getFutureConditions(cityLon, cityLat);
+
+    addSearchHistory(data.name);
+
 }
 
 function getCurrentUV (cityLon, cityLat) {
@@ -103,6 +90,17 @@ function displayCurrentUV(data) {
 
     currentUV.textContent = data.current.uvi;
 
+    console.log(+currentUV.textContent <= 2);
+
+    if (+currentUV.textContent <= 2) {
+        currentUV.setAttribute("class", "lowUV");
+    } else if (+currentUV.textContent <= 5 && +currentUV.textContent >= 3) {
+        currentUV.setAttribute("class", "moderateUV");
+    } else if (+currentUV.textContent <= 7 && +currentUV.textContent > 5) {
+        currentUV.setAttribute("class", "highUV");
+    } else {
+        currentUV.setAttribute("class", "veryHighUV");
+    }
 }
 
 function getFutureConditions(cityLon, cityLat) {
@@ -145,15 +143,67 @@ function displayFutureConditions(data) {
     }
 }
 
-var searchArray = [];
+var searchList = document.querySelector("#search-list");
 
-function addSearchHistory(city) {
 
-    var historyBtn = document.createElement("button");
-    searchList.appendChild(historyBtn);
-    historyBtn.setAttribute("class", "btn");
-    historyBtn.textContent = city;
+function addSearchHistory(cityName) {
 
-    searchArray.push(city);
-    localStorage.setItem("searches", JSON.stringify(searchArray));
+    if (JSON.parse(localStorage.getItem("searches")) == null) {
+
+        var searchArray = [];
+
+        searchArray.push(cityName);
+        var listBtn = document.createElement("button");
+        listBtn.setAttribute("class", "btn");
+        listBtn.textContent = cityName;
+        searchList.prepend(listBtn);
+
+        localStorage.setItem("searches", JSON.stringify(searchArray));
+
+    } else {
+        var searchArray = JSON.parse(localStorage.getItem("searches"));
+        searchArray.push(cityName);
+        var listBtn = document.createElement("button");
+        listBtn.setAttribute("class", "btn");
+        listBtn.textContent = cityName;
+        searchList.prepend(listBtn);
+
+        localStorage.setItem("searches", JSON.stringify(searchArray));
+        
+    }
+
+}
+
+
+var searchArray = JSON.parse(localStorage.getItem("searches"));
+
+if (searchArray !== null) {
+
+for (var i = 0; i < searchArray.length; i++) {
+
+    var listBtn = document.createElement("button");
+    listBtn.textContent = searchArray[i];
+    listBtn.setAttribute("class", "btn");
+    searchList.prepend(listBtn);
+
+}
+}
+
+var searchBtn = searchList.children;
+
+console.log(searchBtn.length);
+
+
+if (searchBtn.length !== 0) {
+
+searchList.addEventListener("click", function(event) {
+
+    if (event.target.matches(".btn")) {
+    console.log(event.target.textContent);
+    input.value = event.target.textContent;
+    }
+
+    getCurrentConditions();
+
+})
 }

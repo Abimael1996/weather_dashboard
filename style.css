@@ -85,4 +85,18 @@ input {
     width: 18%;
 }
 
+.lowUV {
+    background-color: green;
+}
 
+.moderateUV {
+    background-color: yellow;
+}
+
+.highUV {
+    background-color: orange;
+}
+
+.veryHighUV {
+    background-color: red;
+}
