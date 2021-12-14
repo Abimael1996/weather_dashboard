@@ -155,21 +155,23 @@ function addSearchHistory(cityName) {
 
         if (searchArray.indexOf(cityName) === -1) {
             searchArray.push(cityName);
-        }
 
         var searchBtn = document.createElement("button");
         searchBtn.setAttribute("class", "btn");
         searchBtn.textContent = cityName;
         searchList.prepend(searchBtn);
 
+
         localStorage.setItem("searches", JSON.stringify(searchArray));
+
+        }
 
     } else {
         var searchArray = JSON.parse(localStorage.getItem("searches"));
 
         if (searchArray.indexOf(cityName) === -1) {
         searchArray.push(cityName);
-        }
+        
 
         var searchBtn = document.createElement("button");
         searchBtn.setAttribute("class", "btn");
@@ -177,6 +179,8 @@ function addSearchHistory(cityName) {
         searchList.prepend(searchBtn);
 
         localStorage.setItem("searches", JSON.stringify(searchArray));
+
+        }
         
     }
 
@@ -200,14 +204,6 @@ for (var i = 0; i < searchArray.length; i++) {
 }
 
 var searchBtn = searchList.children;
-
-//console.log(searchBtn.length);
-
-//console.log(searchBtn);
-
-//console.log(searchArray);
-
-//console.log(searchArray.indexOf("Culiacan") === -1);
 
 searchList.addEventListener("click", function(event) {
 
