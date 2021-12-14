@@ -214,6 +214,5 @@ searchList.addEventListener("click", function(event) {
 
     getCurrentConditions();
 
-   event.target.remove();
 })
 
