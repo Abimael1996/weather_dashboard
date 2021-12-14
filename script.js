@@ -38,6 +38,7 @@ var currentWind = document.querySelector("#currentWind");
 var currentHum = document.querySelector("#currentHum");
 
 function displayCurrentConditions(data) {
+    
     console.log(data.name);
     cityName.textContent = data.name;
     input.value = "";
@@ -147,26 +148,33 @@ var searchList = document.querySelector("#search-list");
 
 
 function addSearchHistory(cityName) {
-
+    
     if (JSON.parse(localStorage.getItem("searches")) == null) {
 
         var searchArray = [];
 
-        searchArray.push(cityName);
-        var listBtn = document.createElement("button");
-        listBtn.setAttribute("class", "btn");
-        listBtn.textContent = cityName;
-        searchList.prepend(listBtn);
+        if (searchArray.indexOf(cityName) === -1) {
+            searchArray.push(cityName);
+        }
+
+        var searchBtn = document.createElement("button");
+        searchBtn.setAttribute("class", "btn");
+        searchBtn.textContent = cityName;
+        searchList.prepend(searchBtn);
 
         localStorage.setItem("searches", JSON.stringify(searchArray));
 
     } else {
         var searchArray = JSON.parse(localStorage.getItem("searches"));
+
+        if (searchArray.indexOf(cityName) === -1) {
         searchArray.push(cityName);
-        var listBtn = document.createElement("button");
-        listBtn.setAttribute("class", "btn");
-        listBtn.textContent = cityName;
-        searchList.prepend(listBtn);
+        }
+
+        var searchBtn = document.createElement("button");
+        searchBtn.setAttribute("class", "btn");
+        searchBtn.textContent = cityName;
+        searchList.prepend(searchBtn);
 
         localStorage.setItem("searches", JSON.stringify(searchArray));
         
@@ -177,24 +185,29 @@ function addSearchHistory(cityName) {
 
 var searchArray = JSON.parse(localStorage.getItem("searches"));
 
+
+
 if (searchArray !== null) {
 
 for (var i = 0; i < searchArray.length; i++) {
 
-    var listBtn = document.createElement("button");
-    listBtn.textContent = searchArray[i];
-    listBtn.setAttribute("class", "btn");
-    searchList.prepend(listBtn);
+    var searchBtn = document.createElement("button");
+    searchBtn.textContent = searchArray[i];
+    searchBtn.setAttribute("class", "btn");
+    searchList.prepend(searchBtn);
 
 }
 }
 
 var searchBtn = searchList.children;
 
-console.log(searchBtn.length);
+//console.log(searchBtn.length);
 
+//console.log(searchBtn);
 
-if (searchBtn.length !== 0) {
+//console.log(searchArray);
+
+//console.log(searchArray.indexOf("Culiacan") === -1);
 
 searchList.addEventListener("click", function(event) {
 
@@ -205,5 +218,6 @@ searchList.addEventListener("click", function(event) {
 
     getCurrentConditions();
 
+   event.target.remove();
 })
-}
+
