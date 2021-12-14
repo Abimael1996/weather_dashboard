@@ -93,7 +93,7 @@ function displayCurrentUV(data) {
 
     console.log(+currentUV.textContent <= 2);
 
-    if (+currentUV.textContent <= 2) {
+    if (+currentUV.textContent < 3) {
         currentUV.setAttribute("class", "lowUV");
     } else if (+currentUV.textContent <= 5 && +currentUV.textContent >= 3) {
         currentUV.setAttribute("class", "moderateUV");
@@ -208,11 +208,11 @@ var searchBtn = searchList.children;
 searchList.addEventListener("click", function(event) {
 
     if (event.target.matches(".btn")) {
-    console.log(event.target.textContent);
     input.value = event.target.textContent;
-    }
+    
 
     getCurrentConditions();
-
+    
+    }
 })
 
