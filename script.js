@@ -48,6 +48,74 @@ function displayCurrentConditions(data) {
     date.textContent = moment().format(" (M/D/YYYY)");
     cityName.appendChild(date);
 
+    var icon = document.createElement("span");
+
+    console.log(data.weather[0].main === "Clear");
+    
+    if (data.weather[0].main === "Thunderstorm") {
+
+        icon.textContent = "⛈";
+
+    } else if (data.weather[0].main === "Drizzle") {
+
+        icon.textContent = "🌧";
+
+    } else if (data.weather[0].main === "Rain") {
+
+        icon.textContent = "🌧";
+
+    } else if (data.weather[0].main === "Snow") {
+
+        icon.textContent = "🌨";
+        
+    } else if (data.weather[0].main === "Mist") {
+
+        icon.textContent = "🌫";
+        
+    } else if (data.weather[0].main === "Smoke") {
+
+        icon.textContent = "💨";
+        
+    } else if (data.weather[0].main === "Haze") {
+
+        icon.textContent = "🌫";
+        
+    } else if (data.weather[0].main === "Dust") {
+
+        icon.textContent = "🌫";
+        
+    } else if (data.weather[0].main === "Ash") {
+
+        icon.textContent = "🌋";
+        
+    } else if (data.weather[0].main === "Fog") {
+
+        icon.textContent = "🌫";
+        
+    } else if (data.weather[0].main === "Sand") {
+
+        icon.textContent = "🏜";
+        
+    } else if (data.weather[0].main === "Squall") {
+
+        icon.textContent = "💨";
+        
+    } else if (data.weather[0].main === "Tornado") {
+
+        icon.textContent = "🌪";
+        
+    } else if (data.weather[0].main === "Clear") {
+
+        icon.textContent = "☀️";
+        
+    } else if (data.weather[0].main === "Clouds") {
+
+        icon.textContent = "☁️";
+        
+    }; 
+
+    cityName.appendChild(icon);
+
     currentTemp.textContent = data.main.temp + "°F";
     currentWind.textContent = data.wind.speed + " MPH";
     currentHum.textContent = data.main.humidity + "%";
