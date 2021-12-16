@@ -96,7 +96,7 @@ input {
 }
 
 .moderateUV {
-    background-color: yellow;
+    background-color: rgba(216, 216, 20, 0.61);
 }
 
 .highUV {
